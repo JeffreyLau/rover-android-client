@@ -81,6 +81,16 @@ public class SharedPreferencesHandler {
         return getString(Settings.VIDEO_PASSWORD);
     }
 
+    public final String getToken() throws IllegalArgumentException {
+        final SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(mContext);
+        final String token = sharedPreferences.getString("token", "");
+        if (TextUtils.isEmpty(token)) {
+            throw new IllegalArgumentException("Empty string in settings");
+        }
+        return token;
+    }
+
     /**
      * Gets string using key from settings.
      *

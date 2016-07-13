@@ -2,9 +2,10 @@ package org.dasfoo.rover.android.client.grpc.task;
 
 import android.util.Log;
 
+import org.dasfoo.rover.android.client.BuildConfig;
+
 import java.util.concurrent.TimeUnit;
 
-import org.dasfoo.rover.android.client.BuildConfig;
 import dasfoo.grpc.roverserver.nano.RoverServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -31,7 +32,7 @@ public class GrpcConnection {
     /**
      * Attaches to header for validation user on server.
      */
-    private final String mPassword;
+    private final String mToken;
 
     private ManagedChannel mChannel;
 
@@ -42,12 +43,12 @@ public class GrpcConnection {
      *
      * @param host is for connection to the server
      * @param port is for connection to the server
-     * @param password is for validating user
+     * @param token is for validating user
      */
-    public GrpcConnection(final String host, final int port, final String password) {
+    public GrpcConnection(final String host, final int port, final String token) {
         this.mHost = host;
         this.mPort = port;
-        this.mPassword = password;
+        this.mToken = token;
         establishConnection();
     }
 
@@ -62,16 +63,16 @@ public class GrpcConnection {
     /**
      * Getters method for returning password.
      *
-     * @return password
+     * @return token
      */
-    public final String getPassword() {
-        return mPassword;
+    public final String getToken() {
+        return mToken;
     }
 
     private void establishConnection() {
         // Create header for stub
         Metadata headers = new Metadata();
-        headers.put(authKey, mPassword);
+        headers.put(authKey, mToken);
         mChannel = ManagedChannelBuilder.forAddress(mHost, mPort).build();
         mStub = RoverServiceGrpc.newBlockingStub(mChannel);
         // Attach header to stub

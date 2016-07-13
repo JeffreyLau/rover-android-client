@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String PROVIDER_NOT_INSTALLED =
             "The security provider installation failed, " +
-            "encrypted communication is not available: %s";
+                    "encrypted communication is not available: %s";
     private static final String TAG = MainActivity.class.getName();
 
     /**
@@ -201,11 +201,11 @@ public class MainActivity extends AppCompatActivity
                         new SharedPreferencesHandler(MainActivity.this);
                 final String host = sharedPreferences.getGrpcHost();
                 final int port = sharedPreferences.getGrpcPort();
-                final String password = sharedPreferences.getPassword();
+                final String password = sharedPreferences.getToken();
                 // TODO(ksheremet): implement onSharedPreferencesChanged
                 if (mGrpcConnection == null ||
                         !host.equals(mGrpcConnection.getHost()) ||
-                        !password.equals(mGrpcConnection.getPassword()) ||
+                        !password.equals(mGrpcConnection.getToken()) ||
                         port != mGrpcConnection.getPort()) {
                     mGrpcConnection = new GrpcConnection(host, port, password);
                 }
